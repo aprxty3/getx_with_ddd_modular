@@ -1,22 +1,29 @@
 import 'package:flutter/material.dart';
 
-void main() => runApp(MyApp());
+import 'core/env.dart';
 
-class MyApp extends StatelessWidget {
+void main() => Development();
+
+class Development extends Env {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Material App',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Material App Bar'),
-        ),
-        body: Center(
-          child: Container(
-            child: Text('Hello World'),
-          ),
-        ),
-      ),
-    );
-  }
+  final String appName = '';
+  @override
+  final String articleUrl = '';
+  @override
+  final String baseUrl = ''; //dev
+  @override
+  final String tnc = '';
+  @override
+  final String socketUrl = ''; // socket.io has connected
+  @override
+  final String websocket =
+      ''; // socket.io reject connecting so websocket handle it
+
+  @override
+  final Color primarySwatch = Colors.teal;
+  @override
+  EnvType environmentType = EnvType.development;
+
+  @override
+  final String dbName = '';
 }
