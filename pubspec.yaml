@@ -34,6 +34,8 @@ dependencies:
   shared_preferences: ^2.0.15
   path_provider: ^2.0.11
   flutter_secure_storage: ^6.0.0
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
 
   #Network
   dio: ^4.0.6
@@ -47,11 +49,13 @@ dependencies:
   rive: ^0.9.1
   carousel_slider: ^4.1.1
   simple_animations: ^5.0.0+2
+  flutter_easyloading: ^3.0.3
   animate_do: ^2.1.0
   shimmer: ^2.0.0
   fluttertoast: ^8.1.1
 
   #Utility
+  uni_links: ^0.5.1
   cupertino_icons: ^1.0.5
   jiffy: ^5.0.0
   getwidget: ^3.0.1
@@ -59,6 +63,8 @@ dependencies:
   google_fonts: ^3.0.1
   font_awesome_flutter: ^10.2.1
   flutter_svg: ^1.1.6
+  syncfusion_flutter_charts: ^20.1.56
+  table_calendar: ^3.0.5
 
 dev_dependencies:
   build_runner: ^2.3.2
