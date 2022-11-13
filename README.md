@@ -1,4 +1,7 @@
 # Boiler Plate Project
+inspire by ResoCoder
+https://resocoder.com/category/tutorials/flutter/firebase-ddd/
+
 ## With Tools
 * GetX
 * Dio
