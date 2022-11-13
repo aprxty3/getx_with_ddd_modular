@@ -3,7 +3,6 @@ import 'package:getx_with_ddd_modular/app/network/db_repository.dart';
 import 'package:getx_with_ddd_modular/app/network/global_variable.dart';
 import 'package:getx_with_ddd_modular/app/network/provider/api_provider.dart';
 import 'package:getx_with_ddd_modular/app/network/provider/db_provider.dart';
-import 'package:getx_with_ddd_modular/app/network/provider/dl_provider.dart';
 
 class AppBinding extends Bindings {
   @override
@@ -11,7 +10,6 @@ class AppBinding extends Bindings {
     // PREPARATION BASIC DEPENDENCY
     Get.put(APIProvider(), permanent: true);
     Get.put(DBProvider(), permanent: true);
-    Get.put(DLProvider(), permanent: true);
     Get.put(GlobalVariables(), permanent: true);
     Get.put(
         DataSourceRepository(apiProvider: Get.find(), dbProvider: Get.find()),
