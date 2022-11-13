@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_with_ddd_modular/app/lang/translation_service.dart';
+import 'package:getx_with_ddd_modular/app/theme/theme_data.dart';
 
 import 'app_provider.dart';
 import 'app_route.dart';

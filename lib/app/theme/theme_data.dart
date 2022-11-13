@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:getx_with_ddd_modular/utility/shared/constants/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class ThemeConfig {

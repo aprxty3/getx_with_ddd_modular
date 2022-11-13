@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:getx_with_ddd_modular/presentation/core/reset_password/reset_password_ui.dart';
+import 'package:getx_with_ddd_modular/utility/shared/widgets/common_widget.dart';
 import 'package:uni_links/uni_links.dart';
 
 class DLProvider {

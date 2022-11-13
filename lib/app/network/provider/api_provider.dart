@@ -6,6 +6,14 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData;
+import 'package:getx_with_ddd_modular/core/env.dart';
+import 'package:getx_with_ddd_modular/presentation/core/sign_in/sign_in_ui.dart';
+import 'package:getx_with_ddd_modular/utility/log/dio_logger.dart';
+import 'package:getx_with_ddd_modular/utility/shared/constants/storage.dart';
+import 'package:getx_with_ddd_modular/utility/shared/widgets/common_widget.dart';
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class APIProvider {
   static const String tag = 'APIProvider';
@@ -83,14 +91,14 @@ class APIProvider {
             if (!isNotForbiden) {
               CommonWidget.toast(
                   'Session Login has been expired, re-login please!');
-              Get.offAllNamed(SigninUi.namePath);
+              Get.offAllNamed(SignInUi.namePath);
               Get.find<SharedPreferences>().clear();
             }
           }
         }).catchError((error, stackTrace) {
           CommonWidget.toast(
               'Session Login has been expired, re-login please!');
-          Get.offAllNamed(SigninUi.namePath);
+          Get.offAllNamed(SignInUi.namePath);
           Get.find<SharedPreferences>().clear();
           handler.reject(error, true);
         }).whenComplete(() => _dio.unlock());
@@ -268,7 +276,6 @@ class APIProvider {
       'Authorization': 'Bearer ${storage.getString(StorageConstants.token)}',
       'Content-Type': 'application/json',
     };
-
 
     Get.log('header : ${dioOptions.headers}');
     return dioOptions;

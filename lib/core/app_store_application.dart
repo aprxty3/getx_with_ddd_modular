@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:getx_with_ddd_modular/utility/framework/application.dart';
+import 'package:getx_with_ddd_modular/utility/log/log.dart';
 import 'package:logging/logging.dart';
 
 import 'env.dart';
