@@ -19,4 +19,5 @@ class Production extends Env {
   EnvType environmentType = EnvType.production;
 
   @override
-  final String dbName = '
+  final String dbName = '';
+}

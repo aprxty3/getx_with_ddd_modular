@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:getx_with_ddd_modular/utility/shared/constants/colors.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
-
+import 'package:getx_with_ddd_modular/utility/shared/utils/date_extension.dart';
 
 enum DateTimeType { single, multi }
 
@@ -41,7 +41,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     selectedSingleDate = DateTime.now();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
