@@ -55,7 +55,6 @@ dependencies:
   fluttertoast: ^8.1.1
 
   #Utility
-  uni_links: ^0.5.1
   cupertino_icons: ^1.0.5
   jiffy: ^5.0.0
   getwidget: ^3.0.1
