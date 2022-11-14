@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:getx_with_ddd_modular/app/lang/translation_service.dart';
-import 'package:getx_with_ddd_modular/app/theme/theme_data.dart';
 
+import '../app/lang/translation_service.dart';
+import '../app/theme/theme_data.dart';
 import 'app_provider.dart';
 import 'app_route.dart';
 import 'app_store_application.dart';
@@ -19,9 +19,8 @@ class AppComponent extends StatelessWidget {
     Get.log(Env.value.appName);
 
     final myApp = GetMaterialApp(
+      showPerformanceOverlay: false,
       debugShowCheckedModeBanner: false,
-
-      /// Change to EnvType.production if want to release
       enableLog: Env.value.environmentType == EnvType.development,
       getPages: AppRouter.routes,
       initialRoute: AppRouter.initial,
@@ -38,7 +37,7 @@ class AppComponent extends StatelessWidget {
       translations: TranslationService(),
     );
 
-    final appProvider = AppProvider(child: myApp, application: _application);
+    final appProvider = AppProvider(application: _application, child: myApp);
     return appProvider;
   }
 }

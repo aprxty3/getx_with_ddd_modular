@@ -8,5 +8,6 @@ class DenpendencyInjection {
     await Get.putAsync(() => StorageService().init());
     await Get.putAsync(() => FileManagerProvider().init());
     await Get.putAsync(() => DBProvider().registerAdapter());
+    // await Get.putAsync(() async => DbmsProvider(isar: await initIsar()));
   }
 }
