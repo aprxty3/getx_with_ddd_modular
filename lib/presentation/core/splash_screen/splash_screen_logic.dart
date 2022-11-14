@@ -15,7 +15,7 @@ class SplashScreenLogic extends GetxController {
   @override
   void onReady() async {
     super.onReady();
-    await Future.delayed(const Duration(seconds: 1));
+    await Future.delayed(const Duration(seconds: 3));
     Get.offNamedUntil(SignInUi.namePath, (route) => false);
   }
 }
