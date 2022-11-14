@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:math';
+
 import 'package:get/get.dart';
-import 'package:getx_with_ddd_modular/core/env.dart';
-import 'package:getx_with_ddd_modular/utility/shared/constants/storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../core/env.dart';
+import '../../utility/shared/constants/storage.dart';
 
 enum UserPresence { online, busy, away, offline }
 
@@ -11,7 +13,7 @@ class WebSocketService extends GetNotifier {
   WebSocketService() : super('');
   static const tag = 'WebSocketService';
 
-  var pref = Get.find<SharedPreferences>();
+  final pref = Get.find<SharedPreferences>();
   GetSocket ws = GetSocket(Env.value.socketUrl);
   late String? chatToken;
   final _isConnected = GetStream<bool>();
@@ -26,9 +28,10 @@ class WebSocketService extends GetNotifier {
 
     _isConnected.add(false);
 
-    ws.onOpen(() {
+    ws.onOpen(() async {
       Get.log('$tag onOpen');
-      chatToken = pref.getString(StorageConstants.chatToken);
+      chatToken =
+          pref.getString(StorageConstants.chatToken);
 
       if (chatToken != null) wsLoginConnecting();
 
