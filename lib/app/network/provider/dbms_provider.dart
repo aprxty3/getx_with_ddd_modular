@@ -1,14 +1,6 @@
-// import 'package:callink_flutter/features/callink_chat/infrastructure/chat/models/object/message_documents_object.dart';
-// import 'package:callink_flutter/features/callink_chat/infrastructure/chat/models/object/message_files_object.dart';
-// import 'package:callink_flutter/features/callink_chat/infrastructure/chat/models/object/message_multimedia_object.dart';
+
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
-
-// import '../../../features/callink_chat/infrastructure/chat/models/object/chat_message_object.dart';
-// import '../../../features/callink_chat/infrastructure/chat/models/object/chat_room_object.dart';
-// import '../../../features/callink_core/infrastructure/auth/models/object/user_config_object.dart';
-
-// late final Future<Isar> isar;
 
 class DbmsProvider {
   Isar isar;
@@ -62,12 +54,7 @@ initIsar() async {
   final dir = await getApplicationDocumentsDirectory();
 
   final isar = Isar.open([
-    // UserConfigSchema,
-    // ChatRoomSchema,
-    // ChatMessageSchema,
-    // MessageMultiMediaSchema,
-    // MessageFilesSchema,
-    // MessageDocumentsSchema
+    // TODO : add Schema to running IsarDB
   ], inspector: true, directory: dir.path);
   return isar;
 }
