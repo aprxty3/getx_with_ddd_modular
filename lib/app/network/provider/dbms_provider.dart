@@ -1,4 +1,3 @@
-
 import 'package:isar/isar.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -9,12 +8,8 @@ class DbmsProvider {
 
   IsarCollection readCollections({required TableEnum tableEnum}) {
     var collect = {
-      // TableEnum.tableRoom: isar.chatRooms,
-      // TableEnum.tableMessage: isar.chatMessages,
-      // TableEnum.tableUser: isar.userConfigs,
-      // TableEnum.tableMultimedia: isar.messageMultiMedias,
-      // TableEnum.tableFiles: isar.messageFiles,
-      // TableEnum.tableDocuments: isar.messageDocuments,
+      // TableEnum.tableRoom: isar.featureRoom,
+      // TableEnum.tableMessage: isar.featureMessage,
     };
 
     return collect[tableEnum] as IsarCollection;
