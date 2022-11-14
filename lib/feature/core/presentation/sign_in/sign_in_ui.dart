@@ -50,6 +50,10 @@ class SignInUi extends StatelessWidget {
       child: TextFormField(
         obscureText: name == 'user' ? false : true,
         style: const TextStyle(fontSize: 16, color: Colors.black),
+        decoration: InputDecoration(
+          hintText: name == 'user' ? 'Username' : 'Password',
+          hintStyle: const TextStyle(fontSize: 14, color: Colors.red),
+        ),
       ),
     );
   }
