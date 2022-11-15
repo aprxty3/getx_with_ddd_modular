@@ -40,7 +40,7 @@ class AppBinding extends Bindings {
     Get.put(RequestResetPassRepository(), permanent: true);
     Get.put(RequestResetPassAppService(), permanent: true);
 
-    ///PROFILE
+    ///Main
     //Modul Get Profile
     // Get.put(GetProfileDataSource(), permanent: true);
     // Get.put(GetProfileRepository(), permanent: true);
