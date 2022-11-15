@@ -48,6 +48,9 @@ class SignInUi extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
       child: TextFormField(
+        controller: name == 'user'
+            ? state.usernameController.value
+            : state.passwordController.value,
         obscureText: name == 'user' ? false : true,
         style: const TextStyle(fontSize: 16, color: Colors.black),
         decoration: InputDecoration(
@@ -69,7 +72,9 @@ class SignInUi extends StatelessWidget {
       height: 50,
       child: TextButton(
         onPressed: () => name == 'sign in'
-            ? logic.signIn()
+            ?
+            //TODO : you can use function like this to provide the API
+            logic.signIn()
             : Get.toNamed(ResetPasswordUi.namePath),
         child: Text(
           name == 'sign in' ? 'Sign In' : 'Forget Password',
