@@ -6,11 +6,13 @@ import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart' hide Response, FormData;
+import 'package:jwt_decode/jwt_decode.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/env.dart';
+import '../../../feature/core/presentation/sign_in/sign_in_ui.dart';
 import '../../../utility/shared/constants/storage.dart';
 import '../../../utility/shared/widgets/common_widget.dart';
 import '../../common/exception.dart';
@@ -23,21 +25,24 @@ var uploadProgresStories = 0.0.obs;
 class APIProvider {
   static const String tag = 'APIProvider';
 
+  static final String _baseUrl = '${Env.value.baseUrl}/api';
+
   // static final String _articleUrl = Env.value.articleUrl + '/api';
-  String baseUrl;
+  // String baseUrl;
 
   late bool isConnected = false;
   late Dio _dio;
   var tokenDio = Dio();
+  String? token;
   late BaseOptions dioOptions;
   late Directory dir;
   var storage = Get.find<SharedPreferences>();
 
-  APIProvider({required this.baseUrl}) {
+  APIProvider() {
     Future.microtask(
         () async => dir = await getApplicationDocumentsDirectory());
 
-    dioOptions = BaseOptions()..baseUrl = '$baseUrl/api';
+    dioOptions = BaseOptions()..baseUrl = APIProvider._baseUrl;
     dioOptions.validateStatus = (value) {
       return value! < 500;
     };
@@ -45,7 +50,14 @@ class APIProvider {
     _dio = Dio(dioOptions);
     tokenDio.options = _dio.options;
 
-    if (Get.isLogEnable) {
+    // (_dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+    //     (HttpClient client) {
+    //   client.badCertificateCallback =
+    //       (X509Certificate cert, String host, int port) => true;
+    //   return client;
+    // };
+
+    if (EnvType.development == Env.value.environmentType) {
       _dio.interceptors.add(PrettyDioLogger(
         requestHeader: true,
         requestBody: true,
@@ -61,6 +73,48 @@ class APIProvider {
         .add(InterceptorsWrapper(onRequest: (options, handler) async {
       // DioLogger.onSend(tag, options);
       await checkConnectivity();
+      if (storage.getString(StorageConstants.token) != null &&
+          Jwt.isExpired(storage.getString(StorageConstants.token)!)) {
+        Get.log(
+            'isExpired Token : ${Jwt.isExpired(storage.getString(StorageConstants.token)!)}');
+        Get.log(
+            'refresh_token :${storage.getString(StorageConstants.refreshToken)}');
+        Get.log('last Token :${storage.getString(StorageConstants.token)}');
+        _dio.lock();
+
+        await tokenDio.post('$_baseUrl/user/token/refresh', data: {
+          "refresh_token": '${storage.getString(StorageConstants.refreshToken)}'
+        }).then((response) async {
+          Get.log(
+              'request token succeed, value: ${response.data['data']['auth_token']}');
+          Get.log(
+              'continue to perform request：path: ${options.path}，baseURL:${options.path}');
+
+          if (response.statusCode == 200) {
+            var newToken = response.data['data']['auth_token'];
+            storage.setString(StorageConstants.token, newToken);
+            options.headers = {'Authorization': 'Bearer $newToken'};
+            token = 'Bearer $newToken';
+            handler.next(options);
+          } else if (response.statusCode == 403) {
+            var isNotForbiden = response.data['success'];
+            if (!isNotForbiden) {
+              CommonWidget.toast(
+                  'Session Login has been expired, re-login please!');
+              Get.offAllNamed(SignInUi.namePath);
+              Get.find<SharedPreferences>().clear();
+            }
+          }
+        }).catchError((error, stackTrace) {
+          CommonWidget.toast(
+              'Session Login has been expired, re-login please!');
+          Get.offAllNamed(SignInUi.namePath);
+          Get.find<SharedPreferences>().clear();
+          handler.reject(error, true);
+        }).whenComplete(() => _dio.unlock());
+      } else {
+        return handler.next(options);
+      }
       return handler.next(options);
     }, onResponse: (response, handler) {
       // DioLogger.onSuccess(tag, response);
@@ -133,6 +187,50 @@ class APIProvider {
       CommonWidget.toast('Something went wrong for story post');
       throw Exception(json.decode(ex.response.toString())["error"]);
     }
+  }
+
+  Future<Either<GenericException, Response>> downloadFile(
+      {required String url,
+      required TypeFile type,
+      required String fileName}) async {
+    String path = '${dir.path}/Ai-Care/';
+
+    switch (type) {
+      case TypeFile.video:
+        path += 'Video/$fileName.$type';
+        break;
+      case TypeFile.audio:
+        path += 'Audio/$fileName.$type';
+        break;
+      case TypeFile.image:
+        path += 'Images/$fileName.$type';
+        break;
+      case TypeFile.zip:
+      case TypeFile.docx:
+      case TypeFile.pdf:
+      case TypeFile.xls:
+      case TypeFile.pptx:
+        path += 'Documents/$fileName.$type';
+        break;
+    }
+    final response = await _dio.download(
+      url,
+      path,
+      onReceiveProgress: (count, total) {
+        Get.dialog(
+          CircularProgressIndicator(
+            value: count / total * 100,
+            // Defaults to 0.5.
+            valueColor: const AlwaysStoppedAnimation(Colors.pink),
+            // Defaults to the current Theme's accentColor.
+            backgroundColor: Colors.white,
+            // Defaults to the current Theme's backgroundColor.
+            color: Colors.red,
+          ),
+        );
+      },
+    );
+    return Right(response);
   }
 
   Future<Either<GenericException, Response>> getData(String path) async {
@@ -249,20 +347,21 @@ class APIProvider {
   }
 
   Future<BaseOptions> addAuthorOpt() async {
-    if (Env.value.articleUrl == baseUrl) {
-      dioOptions.headers = {
-        'X-Platfom': 'api',
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-      };
-    } else {
+    // if (Env.value.articleUrl == baseUrl) {
+    //   dioOptions.headers = {
+    //     'X-Platfom': 'api',
+    //     'Accept': 'application/json',
+    //     'Content-Type': 'application/json',
+    //   };
+    // } else
+    {
       dioOptions.headers = {
         'accept': 'application/json',
         'Authorization': 'Bearer ${storage.getString(StorageConstants.token)}',
         'Content-Type': 'application/json',
       };
     }
-
+    Get.log('header : ${dioOptions.headers}');
     return dioOptions;
   }
 
@@ -272,7 +371,7 @@ class APIProvider {
   }
 
   Future<BaseOptions> urlDefaultOpt() async {
-    dioOptions.baseUrl = baseUrl;
+    dioOptions.baseUrl = _baseUrl;
     return dioOptions;
   }
 

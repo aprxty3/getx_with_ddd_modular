@@ -4,14 +4,12 @@ import 'package:getx_with_ddd_modular/app/network/global_variable.dart';
 import 'package:getx_with_ddd_modular/app/network/provider/api_provider.dart';
 import 'package:getx_with_ddd_modular/app/network/provider/db_provider.dart';
 
-import 'env.dart';
-
 class AppBinding extends Bindings {
   @override
   void dependencies() {
     // PREPARATION BASIC DEPENDENCY
-    Get.put(APIProvider(baseUrl: Env.value.baseUrl));
-    Get.put(APIProvider(baseUrl: Env.value.baseUrl), tag: 'APIProvider');
+    Get.put(APIProvider());
+    Get.put(APIProvider(), tag: 'APIProvider');
     Get.put(DBProvider(), permanent: true);
     Get.put(GlobalVariables(), permanent: true);
     Get.put(
