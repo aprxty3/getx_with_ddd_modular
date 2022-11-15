@@ -8,10 +8,12 @@ void main() => Development();
 
 class Development extends Env {
   @override
+  //TODO : fill the blank String
   final String appName = 'Name Your Project';
   @override
   final String articleUrl = '';
   @override
+  //TODO : fill the baseURL of API you have
   final String baseUrl = ''; //dev
   @override
   final String tnc = '';
