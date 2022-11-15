@@ -3,6 +3,10 @@ import 'package:getx_with_ddd_modular/app/network/db_repository.dart';
 import 'package:getx_with_ddd_modular/app/network/global_variable.dart';
 import 'package:getx_with_ddd_modular/app/network/provider/api_provider.dart';
 import 'package:getx_with_ddd_modular/app/network/provider/db_provider.dart';
+import 'package:getx_with_ddd_modular/feature/core/application/request_reset_pass_app_service.dart';
+import 'package:getx_with_ddd_modular/feature/core/infrastructure/reset_pass/data_source/request_reset_data_source.dart';
+import 'package:getx_with_ddd_modular/feature/core/infrastructure/reset_pass/repository/request_reset_pass_repository.dart';
+import 'package:getx_with_ddd_modular/feature/core/infrastructure/reset_pass/request_reset_pass_factory.dart';
 
 import '../feature/core/application/sign_in_app_service.dart';
 import '../feature/core/infrastructure/sign_in/data_source/sign_in_remote_data_source.dart';
@@ -31,17 +35,10 @@ class AppBinding extends Bindings {
     Get.put(SignInAppService(), permanent: true);
 
     //Module Request Reset Password
-    // Get.put(ReqResetPassDataSource(), permanent: true);
-    // Get.put(ReqResetPassFactory(), permanent: true);
-    // Get.put(ReqResetPassRepository(), permanent: true);
-    // Get.put(ReqResetPassAppService(), permanent: true);
-
-    //Module Reset Password
-    // Get.put(ResetPassDataSource(), permanent: true);
-    // Get.put(ResetPassFactory(), permanent: true);
-    // Get.put(ResetPassRepository(), permanent: true);
-    // Get.put(ResetPassAppService(), permanent: true);
-    // Get.put(ResetPassValidation(), permanent: true);
+    Get.put(RequestResetPassDataSource(), permanent: true);
+    Get.put(RequestResetPassFactory(), permanent: true);
+    Get.put(RequestResetPassRepository(), permanent: true);
+    Get.put(RequestResetPassAppService(), permanent: true);
 
     ///PROFILE
     //Modul Get Profile
