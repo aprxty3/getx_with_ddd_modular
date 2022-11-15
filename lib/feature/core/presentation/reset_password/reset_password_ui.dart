@@ -18,8 +18,7 @@ class ResetPasswordUi extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           _logo(),
-          _textField('pass'),
-          _textField('reType'),
+          _textField(),
           _button(),
         ],
       ),
@@ -42,17 +41,19 @@ class ResetPasswordUi extends StatelessWidget {
     );
   }
 
-  _textField(String name) {
+  _textField() {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      child: TextFormField(
-        obscureText: name == 'pass' ? false : true,
-        style: const TextStyle(fontSize: 16, color: Colors.black),
-        decoration: InputDecoration(
-          hintText: name == 'pass' ? 'Password' : 'Retype Password',
-          hintStyle: const TextStyle(fontSize: 14, color: Colors.blue),
-        ),
-      ),
+      child: Obx(() {
+        return TextFormField(
+          controller: state.emailController.value,
+          style: const TextStyle(fontSize: 16, color: Colors.black),
+          decoration: const InputDecoration(
+            hintText: 'Email',
+            hintStyle: TextStyle(fontSize: 14, color: Colors.blue),
+          ),
+        );
+      }),
     );
   }
 

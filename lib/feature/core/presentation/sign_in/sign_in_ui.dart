@@ -47,17 +47,19 @@ class SignInUi extends StatelessWidget {
   _textField(String name) {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      child: TextFormField(
-        controller: name == 'user'
-            ? state.usernameController.value
-            : state.passwordController.value,
-        obscureText: name == 'user' ? false : true,
-        style: const TextStyle(fontSize: 16, color: Colors.black),
-        decoration: InputDecoration(
-          hintText: name == 'user' ? 'Username' : 'Password',
-          hintStyle: const TextStyle(fontSize: 14, color: Colors.red),
-        ),
-      ),
+      child: Obx(() {
+        return TextFormField(
+          controller: name == 'user'
+              ? state.usernameController.value
+              : state.passwordController.value,
+          obscureText: name == 'user' ? false : true,
+          style: const TextStyle(fontSize: 16, color: Colors.black),
+          decoration: InputDecoration(
+            hintText: name == 'user' ? 'Username' : 'Password',
+            hintStyle: const TextStyle(fontSize: 14, color: Colors.red),
+          ),
+        );
+      }),
     );
   }
 
