@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:getx_with_ddd_modular/feature/main/presentation/main_home_page/main_home_page_binding.dart';
 import 'package:getx_with_ddd_modular/feature/main/presentation/main_home_page/main_home_page_ui.dart';
+import 'package:getx_with_ddd_modular/feature/main/presentation/profile_page/profile_page_binding.dart';
+import 'package:getx_with_ddd_modular/feature/main/presentation/profile_page/profile_page_ui.dart';
 
 import '../feature/core/presentation/reset_password/reset_password_binding.dart';
 import '../feature/core/presentation/reset_password/reset_password_ui.dart';
@@ -33,6 +35,11 @@ class AppRouter {
       name: MainHomePageUi.namePath,
       page: () => MainHomePageUi(),
       binding: MainHomePageBinding(),
+    ),
+    GetPage(
+      name: ProfilePageUi.namePath,
+      page: () => ProfilePageUi(),
+      binding: ProfilePageBinding(),
     ),
   ];
 }

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'profile_page_logic.dart';
 
 class ProfilePageUi extends StatelessWidget {
+  static const String namePath = '/profile-page';
   final logic = Get.find<ProfilePageLogic>();
   final state = Get.find<ProfilePageLogic>().state;
 
@@ -11,6 +12,6 @@ class ProfilePageUi extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold();
   }
 }
